@@ -1,3 +1,4 @@
+
 interface Message {
   role: 'system' | 'user' | 'assistant';
   content: string;
@@ -45,7 +46,7 @@ export async function getAssistantResponse(apiKey: string, message: string, thre
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${apiKey}`,
-          'OpenAI-Beta': 'assistants=v1'
+          'OpenAI-Beta': 'assistants=v2'
         },
         body: JSON.stringify({})
       });
@@ -64,7 +65,7 @@ export async function getAssistantResponse(apiKey: string, message: string, thre
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`,
-        'OpenAI-Beta': 'assistants=v1'
+        'OpenAI-Beta': 'assistants=v2'
       },
       body: JSON.stringify({
         role: 'user',
@@ -77,7 +78,7 @@ export async function getAssistantResponse(apiKey: string, message: string, thre
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${apiKey}`,
-        'OpenAI-Beta': 'assistants=v1'
+        'OpenAI-Beta': 'assistants=v2'
       },
       body: JSON.stringify({
         assistant_id: assistantId
@@ -100,7 +101,7 @@ export async function getAssistantResponse(apiKey: string, message: string, thre
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${apiKey}`,
-          'OpenAI-Beta': 'assistants=v1'
+          'OpenAI-Beta': 'assistants=v2'
         }
       });
       
@@ -121,7 +122,7 @@ export async function getAssistantResponse(apiKey: string, message: string, thre
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
-        'OpenAI-Beta': 'assistants=v1'
+        'OpenAI-Beta': 'assistants=v2'
       }
     });
     
