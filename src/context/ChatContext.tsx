@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { toast } from '@/components/ui/use-toast';
-import { getChatCompletion } from '@/utils/apiService';
+import { getChatCompletion, getAssistantResponse } from '@/utils/apiService';
 
 export type Message = {
   id: string;
@@ -28,6 +28,7 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [apiKey, setApiKey] = useState<string>(DEFAULT_API_KEY);
+  const [threadId, setThreadId] = useState<string | undefined>(undefined);
 
   // Load API key from localStorage on initial render
   useEffect(() => {
@@ -38,6 +39,12 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       // If no API key in localStorage, use the default one and save it
       localStorage.setItem('openai_api_key', DEFAULT_API_KEY);
     }
+    
+    // Load thread ID from localStorage if exists
+    const savedThreadId = localStorage.getItem('openai_thread_id');
+    if (savedThreadId) {
+      setThreadId(savedThreadId);
+    }
   }, []);
 
   // Save API key to localStorage whenever it changes
@@ -46,6 +53,13 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       localStorage.setItem('openai_api_key', apiKey);
     }
   }, [apiKey]);
+
+  // Save thread ID to localStorage whenever it changes
+  useEffect(() => {
+    if (threadId) {
+      localStorage.setItem('openai_thread_id', threadId);
+    }
+  }, [threadId]);
 
   const sendMessage = async (content: string) => {
     if (!content.trim()) return;
@@ -71,27 +85,33 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setIsLoading(true);
 
     try {
-      // Get AI response
-      const response = await getChatCompletion(apiKey, [
-        ...messages.map(msg => ({ role: msg.role, content: msg.content })),
-        { role: 'user', content }
-      ]);
+      // Get assistant response instead of chat completion
+      const { content: assistantContent, threadId: newThreadId } = await getAssistantResponse(
+        apiKey, 
+        content,
+        threadId
+      );
+      
+      // Update thread ID if it's new
+      if (newThreadId !== threadId) {
+        setThreadId(newThreadId);
+      }
 
       // Create an assistant message with the response
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: response,
+        content: assistantContent,
         timestamp: new Date(),
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
-      console.error('Error getting chat completion:', error);
+      console.error('Error getting assistant response:', error);
       
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to get response from AI",
+        description: error instanceof Error ? error.message : "Failed to get response from assistant",
         variant: "destructive",
       });
     } finally {
@@ -101,6 +121,9 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const clearChat = () => {
     setMessages([]);
+    // When clearing chat, we also clear the thread ID to start fresh
+    setThreadId(undefined);
+    localStorage.removeItem('openai_thread_id');
   };
 
   return (
