@@ -21,16 +21,22 @@ interface ChatContextProps {
 
 const ChatContext = createContext<ChatContextProps | undefined>(undefined);
 
+// Store the default API key
+const DEFAULT_API_KEY = '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';
+
 export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [apiKey, setApiKey] = useState<string>('');
+  const [apiKey, setApiKey] = useState<string>(DEFAULT_API_KEY);
 
   // Load API key from localStorage on initial render
   useEffect(() => {
     const savedApiKey = localStorage.getItem('openai_api_key');
     if (savedApiKey) {
       setApiKey(savedApiKey);
+    } else {
+      // If no API key in localStorage, use the default one and save it
+      localStorage.setItem('openai_api_key', DEFAULT_API_KEY);
     }
   }, []);
 
