@@ -51,8 +51,8 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, isLatest }) => {
           className={cn(
             "rounded-2xl px-4 py-3 shadow-message",
             isUser 
-              ? "bg-chat-user text-chat-user-text rounded-tr-none" 
-              : "bg-chat-assistant text-chat-assistant-text glass-panel rounded-tl-none"
+              ? "bg-blue-100 text-gray-800 dark:bg-blue-700 dark:text-gray-100 rounded-tr-none" 
+              : "bg-white text-gray-800 dark:bg-gray-800 dark:text-gray-100 glass-panel rounded-tl-none"
           )}
         >
           <div className="prose dark:prose-invert">
