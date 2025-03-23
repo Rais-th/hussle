@@ -11,22 +11,14 @@ const ChatContainer: React.FC = () => {
   const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Initial welcome message
-  useEffect(() => {
-    if (messages.length === 0) {
-      // No need to add a welcome message here, as it will be empty until the user sends something
-    }
-  }, [messages.length]);
-
   return (
-    <div className="flex flex-col min-h-[calc(100vh-4rem)]">
+    <div className="flex flex-col min-h-screen bg-[#1a1a1a]">
       <div ref={containerRef} className="flex-1 overflow-y-auto scrollbar-hide pb-6">
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center px-4 text-center py-[120px]">
-            <h2 className="text-2xl font-medium mb-3">{t('welcome')}</h2>
-            <p className="text-muted-foreground max-w-md">
-              {t('start.conversation')}
-            </p>
+            <h2 className="text-2xl font-normal mb-10 text-white">
+              What can I help with?
+            </h2>
           </div>
         ) : (
           messages.map((message, index) => (
@@ -39,23 +31,18 @@ const ChatContainer: React.FC = () => {
         )}
         
         {isLoading && messages.length > 0 && (
-          <div className="flex w-full max-w-4xl mx-auto px-4 py-6 animate-fade-in">
-            <div className="flex items-start gap-3">
-              <div className="flex-shrink-0 rounded-full w-8 h-8 flex items-center justify-center bg-neutral-100 dark:bg-neutral-800 animate-pulse-subtle">
-                <span className="text-neutral-600 dark:text-neutral-400 text-xs">AI</span>
-              </div>
-              <div className="glass-panel rounded-2xl rounded-tl-none px-4 py-3 animate-pulse-subtle">
-                <span className="text-sm sm:text-base">
-                  {t('ai.thinking').split('.')[0]}
-                  <span className="typing-indicator"></span>
-                </span>
-              </div>
+          <div className="flex w-full max-w-2xl mx-auto px-4 py-6 animate-fade-in">
+            <div className="bg-neutral-800 rounded-2xl px-4 py-3 animate-pulse-subtle">
+              <span className="text-sm text-white/70">
+                {t('ai.thinking').split('.')[0]}
+                <span className="typing-indicator"></span>
+              </span>
             </div>
           </div>
         )}
       </div>
       
-      <div className="sticky bottom-0 bg-gradient-to-t from-background to-transparent py-6">
+      <div className="sticky bottom-0 py-4">
         <ChatInput />
       </div>
     </div>
@@ -65,9 +52,9 @@ const ChatContainer: React.FC = () => {
 const Index: React.FC = () => {
   return (
     <ChatProvider>
-      <div className="bg-gradient-radial from-background to-background/90 min-h-screen">
+      <div className="bg-[#1a1a1a] min-h-screen">
         <Header />
-        <main className="container mx-auto">
+        <main>
           <ChatContainer />
         </main>
       </div>

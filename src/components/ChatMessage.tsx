@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Message } from '@/context/ChatContext';
@@ -24,44 +23,23 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, isLatest }) => {
     <div
       ref={messageRef}
       className={cn(
-        "flex w-full max-w-4xl mx-auto px-4 py-6 animate-slide-up",
+        "flex w-full max-w-2xl mx-auto px-4 py-6 animate-slide-up",
         isUser ? "justify-end" : "justify-start"
       )}
     >
       <div
         className={cn(
-          "flex items-start gap-3 max-w-[85%]",
-          isUser && "flex-row-reverse"
+          "flex max-w-[85%]",
+          isUser ? "bg-neutral-800 text-white" : "bg-neutral-800 text-white",
+          "rounded-2xl px-4 py-3"
         )}
       >
-        <div
-          className={cn(
-            "flex-shrink-0 rounded-full w-8 h-8 flex items-center justify-center",
-            isUser ? "bg-blue-100 dark:bg-blue-900" : "bg-neutral-100 dark:bg-neutral-800"
-          )}
-        >
-          {isUser ? (
-            <UserIcon className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-          ) : (
-            <Bot className="w-4 h-4 text-neutral-600 dark:text-neutral-400" />
-          )}
-        </div>
-        
-        <div
-          className={cn(
-            "rounded-2xl px-4 py-3 shadow-message",
-            isUser 
-              ? "bg-blue-100 text-gray-800 dark:bg-blue-700 dark:text-gray-100 rounded-tr-none" 
-              : "bg-white text-gray-800 dark:bg-gray-800 dark:text-gray-100 glass-panel rounded-tl-none"
-          )}
-        >
-          <div className="prose dark:prose-invert">
-            {message.content.split('\n').map((paragraph, index) => (
-              <p key={index} className="mb-2 last:mb-0 text-sm sm:text-base">
-                {paragraph}
-              </p>
-            ))}
-          </div>
+        <div className="prose prose-invert">
+          {message.content.split('\n').map((paragraph, index) => (
+            <p key={index} className="mb-2 last:mb-0 text-sm">
+              {paragraph}
+            </p>
+          ))}
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useChat } from '@/context/ChatContext';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp, Plus, Globe, MoreHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -37,10 +37,10 @@ const ChatInput: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4">
+    <div className="w-full max-w-2xl mx-auto p-4">
       <form 
         onSubmit={handleSubmit} 
-        className="flex flex-col glass-panel shadow-lg transition-all duration-200 overflow-hidden"
+        className="flex flex-col bg-[#222222] border border-white/10 rounded-xl shadow-lg transition-all duration-200 overflow-hidden"
       >
         <div className="relative flex">
           <textarea
@@ -50,33 +50,38 @@ const ChatInput: React.FC = () => {
             onKeyDown={handleKeyDown}
             placeholder={t('type.message')}
             rows={1}
-            className="w-full resize-none bg-transparent p-4 pr-12 focus:outline-none text-sm sm:text-base"
+            className="w-full resize-none bg-transparent p-3 pr-12 focus:outline-none text-sm sm:text-base text-white/90 placeholder:text-white/40"
             disabled={isLoading}
           />
-          <button
-            type="submit"
-            disabled={!input.trim() || isLoading}
-            className={cn(
-              "absolute right-3 bottom-3 p-2 rounded-full transition-all duration-300 flex justify-center items-center",
-              input.trim() && !isLoading
-                ? "bg-blue-600 text-white hover:bg-blue-700"
-                : "bg-gray-200 text-gray-500 dark:bg-gray-700 cursor-not-allowed"
-            )}
-          >
-            <ArrowUp size={18} className={cn(isLoading && "opacity-50")} />
-          </button>
+          <div className="absolute right-2 bottom-2 flex space-x-1">
+            <button
+              type="submit"
+              disabled={!input.trim() || isLoading}
+              className={cn(
+                "p-1.5 rounded-full transition-all flex justify-center items-center",
+                input.trim() && !isLoading
+                  ? "bg-white text-black"
+                  : "bg-white/10 text-white/40 cursor-not-allowed"
+              )}
+            >
+              <ArrowUp size={18} strokeWidth={2.5} className={cn(isLoading && "opacity-50")} />
+            </button>
+          </div>
         </div>
         
-        <div className="px-4 pb-2 text-xs text-muted-foreground flex justify-between items-center">
-          <div className="flex-1">
-            {isLoading ? (
-              <span className="text-blue-500 dark:text-blue-400 animate-pulse">
-                {t('ai.thinking')}
-              </span>
-            ) : (
-              <span>{t('enter.to.send')}</span>
-            )}
+        <div className="p-2 border-t border-white/5 flex items-center justify-between">
+          <div className="flex space-x-1">
+            <button type="button" className="p-1.5 rounded-full text-white/50 hover:bg-white/10">
+              <Plus size={18} />
+            </button>
+            <button type="button" className="p-1.5 rounded-full text-white/50 hover:bg-white/10">
+              <Globe size={18} />
+            </button>
           </div>
+          
+          <button type="button" className="p-1.5 rounded-full text-white/50 hover:bg-white/10">
+            <MoreHorizontal size={18} />
+          </button>
         </div>
       </form>
     </div>

@@ -6,16 +6,16 @@ import LanguageSelector from './LanguageSelector';
 
 const Header: React.FC = () => {
   return (
-    <header className="border-b border-border">
-      <div className="container mx-auto flex h-16 items-center justify-between">
-        <div className="font-semibold text-lg">
-          HUSSLE AI
+    <header className="border-b border-white/10">
+      <div className="container mx-auto flex h-12 items-center justify-between">
+        <div className="font-normal text-sm text-white/70">
+          Chat Pro
         </div>
         <div className="flex items-center space-x-2">
           <LanguageSelector />
           <ThemeProvider
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
           >
