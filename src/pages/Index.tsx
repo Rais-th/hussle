@@ -27,7 +27,7 @@ const ChatContainer: React.FC = () => {
             <div className="w-20 h-20 rounded-full bg-gradient-subtle animate-pulse-subtle mb-6 flex items-center justify-center">
               <span className="text-white font-semibold text-2xl">AI</span>
             </div>
-            <h2 className="text-2xl font-medium mb-3">Welcome to AI Assistant</h2>
+            <h2 className="text-2xl font-medium mb-3">Welcome to HUSSLE AI</h2>
             <p className="text-muted-foreground max-w-md">
               Start a conversation by typing a message below. Your chat history will appear here.
             </p>

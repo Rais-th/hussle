@@ -16,7 +16,7 @@ const Header: React.FC = () => {
           <div className="h-8 w-8 rounded-lg bg-gradient-subtle animate-pulse-subtle flex items-center justify-center shadow-sm">
             <span className="text-white font-semibold text-xs">AI</span>
           </div>
-          <h1 className="text-xl font-medium">AI Assistant</h1>
+          <h1 className="text-xl font-medium">HUSSLE AI</h1>
         </div>
         
         <div className="flex items-center gap-2">
