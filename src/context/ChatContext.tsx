@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { toast } from '@/components/ui/use-toast';
 import { getChatCompletion, getAssistantResponse } from '@/utils/apiService';
@@ -20,13 +21,13 @@ interface ChatContextProps {
 
 const ChatContext = createContext<ChatContextProps | undefined>(undefined);
 
-// Store the default API key - make sure it's properly formatted without any whitespace
-const DEFAULT_API_KEY = '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';
+// Store the default API key
+const DEFAULT_API_KEY = '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';
 
 export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [apiKey, setApiKey] = useState<string>('');
+  const [apiKey, setApiKey] = useState<string>(DEFAULT_API_KEY);
   const [threadId, setThreadId] = useState<string | undefined>(undefined);
 
   // Load API key from localStorage on initial render
@@ -36,7 +37,6 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setApiKey(savedApiKey);
     } else {
       // If no API key in localStorage, use the default one and save it
-      setApiKey(DEFAULT_API_KEY);
       localStorage.setItem('openai_api_key', DEFAULT_API_KEY);
     }
     

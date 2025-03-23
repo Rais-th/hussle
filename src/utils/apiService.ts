@@ -6,14 +6,13 @@ interface Message {
 
 export async function getChatCompletion(apiKey: string, messages: Message[]): Promise<string> {
   const url = 'https://api.openai.com/v1/chat/completions';
-  const cleanApiKey = apiKey.trim();
   
   try {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${cleanApiKey}`,
+        'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
         model: 'gpt-4o-mini',
@@ -37,21 +36,16 @@ export async function getChatCompletion(apiKey: string, messages: Message[]): Pr
 }
 
 export async function getAssistantResponse(apiKey: string, message: string, threadId?: string): Promise<{ content: string, threadId: string }> {
-  // Make sure the API key is properly formatted (trim any whitespace)
-  const cleanApiKey = apiKey.trim();
   const assistantId = 'asst_Iq5zWNuMFFeBH5S6kWEHrdOQ';
   
   try {
     let currentThreadId = threadId;
     if (!currentThreadId) {
-      // Create a new thread
-      console.log('Creating new thread with API key:', `Bearer ${cleanApiKey.substring(0, 10)}...`);
-      
       const threadResponse = await fetch('https://api.openai.com/v1/threads', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${cleanApiKey}`,
+          'Authorization': `Bearer ${apiKey}`,
           'OpenAI-Beta': 'assistants=v2'
         },
         body: JSON.stringify({})
@@ -66,12 +60,11 @@ export async function getAssistantResponse(apiKey: string, message: string, thre
       currentThreadId = threadData.id;
     }
     
-    // Add a message to the thread
     await fetch(`https://api.openai.com/v1/threads/${currentThreadId}/messages`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${cleanApiKey}`,
+        'Authorization': `Bearer ${apiKey}`,
         'OpenAI-Beta': 'assistants=v2'
       },
       body: JSON.stringify({
@@ -80,12 +73,11 @@ export async function getAssistantResponse(apiKey: string, message: string, thre
       })
     });
     
-    // Create a run
     const runResponse = await fetch(`https://api.openai.com/v1/threads/${currentThreadId}/runs`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${cleanApiKey}`,
+        'Authorization': `Bearer ${apiKey}`,
         'OpenAI-Beta': 'assistants=v2'
       },
       body: JSON.stringify({
@@ -101,7 +93,6 @@ export async function getAssistantResponse(apiKey: string, message: string, thre
     const runData = await runResponse.json();
     let runId = runData.id;
     
-    // Poll for run completion
     let runStatus = 'queued';
     while (runStatus !== 'completed' && runStatus !== 'failed' && runStatus !== 'cancelled' && runStatus !== 'expired') {
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -109,7 +100,7 @@ export async function getAssistantResponse(apiKey: string, message: string, thre
       const statusResponse = await fetch(`https://api.openai.com/v1/threads/${currentThreadId}/runs/${runId}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${cleanApiKey}`,
+          'Authorization': `Bearer ${apiKey}`,
           'OpenAI-Beta': 'assistants=v2'
         }
       });
@@ -127,11 +118,10 @@ export async function getAssistantResponse(apiKey: string, message: string, thre
       throw new Error(`Run ended with status: ${runStatus}`);
     }
     
-    // Get messages from the thread
     const messagesResponse = await fetch(`https://api.openai.com/v1/threads/${currentThreadId}/messages`, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${cleanApiKey}`,
+        'Authorization': `Bearer ${apiKey}`,
         'OpenAI-Beta': 'assistants=v2'
       }
     });
