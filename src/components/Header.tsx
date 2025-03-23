@@ -4,24 +4,10 @@ import { Settings, X, Check } from 'lucide-react';
 import { useChat } from '@/context/ChatContext';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 
 const Header: React.FC = () => {
-  const { apiKey, setApiKey, clearChat } = useChat();
+  const { clearChat } = useChat();
   const [open, setOpen] = useState(false);
-  const [tempApiKey, setTempApiKey] = useState(apiKey);
-  const [showCheck, setShowCheck] = useState(false);
-
-  const handleSaveApiKey = () => {
-    setApiKey(tempApiKey);
-    setShowCheck(true);
-    
-    setTimeout(() => {
-      setShowCheck(false);
-      setOpen(false);
-    }, 1000);
-  };
 
   return (
     <header className="sticky top-0 z-10 backdrop-blur-md bg-background/80 border-b border-border">
@@ -45,28 +31,6 @@ const Header: React.FC = () => {
                 <DialogTitle>Settings</DialogTitle>
               </DialogHeader>
               <div className="space-y-6 py-4">
-                <div className="space-y-2">
-                  <Label htmlFor="api-key">OpenAI API Key</Label>
-                  <div className="flex gap-2">
-                    <Input
-                      id="api-key"
-                      type="password"
-                      value={tempApiKey}
-                      onChange={(e) => setTempApiKey(e.target.value)}
-                      placeholder="sk-..."
-                    />
-                    <Button
-                      onClick={handleSaveApiKey}
-                      className="min-w-14"
-                    >
-                      {showCheck ? <Check className="h-4 w-4" /> : "Save"}
-                    </Button>
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    Your API key is stored locally in your browser.
-                  </p>
-                </div>
-                
                 <div className="space-y-2">
                   <Button variant="destructive" onClick={() => {
                     clearChat();

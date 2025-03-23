@@ -13,8 +13,6 @@ export type Message = {
 interface ChatContextProps {
   messages: Message[];
   isLoading: boolean;
-  apiKey: string;
-  setApiKey: (key: string) => void;
   sendMessage: (content: string) => Promise<void>;
   clearChat: () => void;
 }
@@ -27,32 +25,17 @@ const DEFAULT_API_KEY = 'sk-proj-QFXOTLE5cBHxY7gEn1qqj0atbaJYtOBfpmdSSAHK70gPc2l
 export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [apiKey, setApiKey] = useState<string>(DEFAULT_API_KEY);
+  const [apiKey] = useState<string>(DEFAULT_API_KEY);
   const [threadId, setThreadId] = useState<string | undefined>(undefined);
 
-  // Load API key from localStorage on initial render
+  // Load thread ID from localStorage on initial render
   useEffect(() => {
-    const savedApiKey = localStorage.getItem('openai_api_key');
-    if (savedApiKey) {
-      setApiKey(savedApiKey);
-    } else {
-      // If no API key in localStorage, use the default one and save it
-      localStorage.setItem('openai_api_key', DEFAULT_API_KEY);
-    }
-    
     // Load thread ID from localStorage if exists
     const savedThreadId = localStorage.getItem('openai_thread_id');
     if (savedThreadId) {
       setThreadId(savedThreadId);
     }
   }, []);
-
-  // Save API key to localStorage whenever it changes
-  useEffect(() => {
-    if (apiKey) {
-      localStorage.setItem('openai_api_key', apiKey);
-    }
-  }, [apiKey]);
 
   // Save thread ID to localStorage whenever it changes
   useEffect(() => {
@@ -63,15 +46,6 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const sendMessage = async (content: string) => {
     if (!content.trim()) return;
-    
-    if (!apiKey) {
-      toast({
-        title: "API Key Required",
-        description: "Please enter your OpenAI API key in the settings.",
-        variant: "destructive",
-      });
-      return;
-    }
 
     // Create a new user message
     const userMessage: Message = {
@@ -129,7 +103,7 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   return (
-    <ChatContext.Provider value={{ messages, isLoading, apiKey, setApiKey, sendMessage, clearChat }}>
+    <ChatContext.Provider value={{ messages, isLoading, sendMessage, clearChat }}>
       {children}
     </ChatContext.Provider>
   );
