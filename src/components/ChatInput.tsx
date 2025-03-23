@@ -1,9 +1,10 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useChat } from '@/context/ChatContext';
-import { ArrowUp, Plus, Globe, MoreHorizontal } from 'lucide-react';
+import { ArrowUp, Plus, Globe, MoreHorizontal, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLanguage } from '@/context/LanguageContext';
+import { Button } from '@/components/ui/button';
 
 const ChatInput: React.FC = () => {
   const { sendMessage, isLoading } = useChat();
@@ -37,10 +38,10 @@ const ChatInput: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-4">
+    <div className="w-full max-w-2xl mx-auto">
       <form 
         onSubmit={handleSubmit} 
-        className="flex flex-col bg-[#222222] border border-white/10 rounded-xl shadow-lg transition-all duration-200 overflow-hidden"
+        className="flex flex-col bg-[#222222] border border-white/10 rounded-xl shadow-lg transition-all duration-200 overflow-hidden mb-3"
       >
         <div className="relative flex">
           <textarea
@@ -84,6 +85,17 @@ const ChatInput: React.FC = () => {
           </button>
         </div>
       </form>
+      
+      {/* Community Join Button */}
+      <div className="flex justify-center mb-4">
+        <Button 
+          onClick={() => window.open('https://skool.com/educs-ai-9369', '_blank')}
+          className="bg-[#9b87f5] hover:bg-[#7E69AB] text-white transition-all duration-200 w-full max-w-sm"
+        >
+          <Users className="mr-2" size={18} />
+          Join the Free AI Community
+        </Button>
+      </div>
     </div>
   );
 };
