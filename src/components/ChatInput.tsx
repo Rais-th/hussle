@@ -90,9 +90,10 @@ const ChatInput: React.FC = () => {
       <div className="flex justify-center mb-4">
         <Button 
           onClick={() => window.open('https://skool.com/educs-ai-9369', '_blank')}
-          className="bg-black hover:bg-gray-800 text-white border border-white/20 transition-all duration-200 w-full max-w-sm"
+          className="bg-black hover:bg-gray-800 text-white border border-white/20 transition-all duration-200 text-xs px-3 py-1 h-8 rounded-md max-w-[200px]"
+          size="sm"
         >
-          <Users className="mr-2" size={18} />
+          <Users className="mr-1" size={14} />
           Join the Free AI Community
         </Button>
       </div>
