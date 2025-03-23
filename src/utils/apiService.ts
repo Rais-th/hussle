@@ -6,13 +6,14 @@ interface Message {
 
 export async function getChatCompletion(apiKey: string, messages: Message[]): Promise<string> {
   const url = 'https://api.openai.com/v1/chat/completions';
+  const cleanApiKey = apiKey.trim();
   
   try {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey.trim()}`,
+        'Authorization': `Bearer ${cleanApiKey}`,
       },
       body: JSON.stringify({
         model: 'gpt-4o-mini',

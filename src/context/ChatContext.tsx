@@ -21,7 +21,7 @@ interface ChatContextProps {
 
 const ChatContext = createContext<ChatContextProps | undefined>(undefined);
 
-// Store the default API key
+// Store the default API key - make sure it's properly formatted without any whitespace
 const DEFAULT_API_KEY = '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';
 
 export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
