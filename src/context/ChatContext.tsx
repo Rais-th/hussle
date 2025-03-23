@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { toast } from '@/components/ui/use-toast';
 import { getChatCompletion, getAssistantResponse } from '@/utils/apiService';
@@ -22,7 +21,7 @@ interface ChatContextProps {
 const ChatContext = createContext<ChatContextProps | undefined>(undefined);
 
 // Store the default API key
-const DEFAULT_API_KEY = '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';
+const DEFAULT_API_KEY = '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';
 
 export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [messages, setMessages] = useState<Message[]>([]);
