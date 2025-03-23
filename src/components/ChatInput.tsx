@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useChat } from '@/context/ChatContext';
-import { SendIcon } from 'lucide-react';
+import { SendHorizontal } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const ChatInput: React.FC = () => {
@@ -26,9 +26,9 @@ const ChatInput: React.FC = () => {
     }
   }, [input]);
 
-  // Handle Ctrl+Enter or Cmd+Enter to send
+  // Handle Enter to send, Shift+Enter for new line
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if ((e.key === 'Enter' && (e.ctrlKey || e.metaKey)) && !isLoading) {
+    if (e.key === 'Enter' && !e.shiftKey && !isLoading) {
       e.preventDefault();
       handleSubmit(e);
     }
@@ -61,7 +61,7 @@ const ChatInput: React.FC = () => {
                 : "bg-gray-200 text-gray-500 dark:bg-gray-700 cursor-not-allowed"
             )}
           >
-            <SendIcon size={18} className={cn(isLoading && "opacity-50")} />
+            <SendHorizontal size={18} className={cn(isLoading && "opacity-50")} />
           </button>
         </div>
         
@@ -72,7 +72,7 @@ const ChatInput: React.FC = () => {
                 L'IA réfléchit...
               </span>
             ) : (
-              <span>Appuyez sur Ctrl+Entrée pour envoyer</span>
+              <span>Appuyez sur Entrée pour envoyer, Maj+Entrée pour un saut de ligne</span>
             )}
           </div>
         </div>
