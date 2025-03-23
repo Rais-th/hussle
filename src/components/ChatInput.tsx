@@ -46,7 +46,7 @@ const ChatInput: React.FC = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Type your message here..."
+            placeholder="Tapez votre message ici..."
             rows={1}
             className="w-full resize-none bg-transparent p-4 pr-12 focus:outline-none text-sm sm:text-base"
             disabled={isLoading}
@@ -69,10 +69,10 @@ const ChatInput: React.FC = () => {
           <div className="flex-1">
             {isLoading ? (
               <span className="text-blue-500 dark:text-blue-400 animate-pulse">
-                AI is thinking...
+                L'IA réfléchit...
               </span>
             ) : (
-              <span>Press Ctrl+Enter to send</span>
+              <span>Appuyez sur Ctrl+Entrée pour envoyer</span>
             )}
           </div>
         </div>

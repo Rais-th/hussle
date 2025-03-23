@@ -28,7 +28,7 @@ const Header: React.FC = () => {
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
               <DialogHeader>
-                <DialogTitle>Settings</DialogTitle>
+                <DialogTitle>Paramètres</DialogTitle>
               </DialogHeader>
               <div className="space-y-6 py-4">
                 <div className="space-y-2">
@@ -36,7 +36,7 @@ const Header: React.FC = () => {
                     clearChat();
                     setOpen(false);
                   }}>
-                    Clear Chat History
+                    Effacer l'historique de conversation
                   </Button>
                 </div>
               </div>

@@ -27,9 +27,9 @@ const ChatContainer: React.FC = () => {
             <div className="w-20 h-20 rounded-full bg-gradient-subtle animate-pulse-subtle mb-6 flex items-center justify-center">
               <span className="text-white font-semibold text-2xl">AI</span>
             </div>
-            <h2 className="text-2xl font-medium mb-3">Welcome to HUSSLE AI</h2>
+            <h2 className="text-2xl font-medium mb-3">Bienvenue sur HUSSLE AI</h2>
             <p className="text-muted-foreground max-w-md">
-              Start a conversation by typing a message below. Your chat history will appear here.
+              Commencez une conversation en tapant un message ci-dessous. Votre historique de conversation apparaîtra ici.
             </p>
           </div>
         ) : (
@@ -49,7 +49,7 @@ const ChatContainer: React.FC = () => {
                 <span className="text-neutral-600 dark:text-neutral-400 text-xs">AI</span>
               </div>
               <div className="glass-panel rounded-2xl rounded-tl-none px-4 py-3 animate-pulse-subtle">
-                <span className="text-sm sm:text-base">Thinking<span className="typing-indicator"></span></span>
+                <span className="text-sm sm:text-base">Réflexion en cours<span className="typing-indicator"></span></span>
               </div>
             </div>
           </div>
