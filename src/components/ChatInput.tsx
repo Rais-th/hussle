@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useChat } from '@/context/ChatContext';
-import { SendHorizontal } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const ChatInput: React.FC = () => {
@@ -61,7 +61,7 @@ const ChatInput: React.FC = () => {
                 : "bg-gray-200 text-gray-500 dark:bg-gray-700 cursor-not-allowed"
             )}
           >
-            <SendHorizontal size={18} className={cn(isLoading && "opacity-50")} />
+            <ArrowUp size={18} className={cn(isLoading && "opacity-50")} />
           </button>
         </div>
         
