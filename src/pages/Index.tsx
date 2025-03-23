@@ -6,10 +6,18 @@ import Header from '@/components/Header';
 import ChatMessage from '@/components/ChatMessage';
 import ChatInput from '@/components/ChatInput';
 import { Languages } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const ChatContainer: React.FC = () => {
   const { messages, isLoading } = useChat();
-  const { t } = useLanguage();
+  const { t, language, setLanguage } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -20,10 +28,25 @@ const ChatContainer: React.FC = () => {
             <h2 className="text-2xl font-normal mb-3 text-white">
               {t('welcome')}
             </h2>
-            <p className="text-white/70 flex items-center mb-2">
-              <Languages className="h-4 w-4 mr-1" />
-              {t('select.language')}
-            </p>
+            <div className="mb-2">
+              <Select
+                value={language}
+                onValueChange={(value) => setLanguage(value as 'en' | 'fr')}
+              >
+                <SelectTrigger className="w-[140px] bg-neutral-800 border-neutral-700 text-white">
+                  <Languages className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder={t('select.language')} />
+                </SelectTrigger>
+                <SelectContent className="bg-neutral-800 border-neutral-700 text-white">
+                  <SelectItem value="fr" className="hover:bg-neutral-700 focus:bg-neutral-700 cursor-pointer">
+                    🇫🇷 Français
+                  </SelectItem>
+                  <SelectItem value="en" className="hover:bg-neutral-700 focus:bg-neutral-700 cursor-pointer">
+                    🇬🇧 English
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             <h3 className="text-xl font-normal text-white/70">
               {t('what.help')}
             </h3>
