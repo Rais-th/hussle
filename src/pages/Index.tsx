@@ -21,7 +21,7 @@ const ChatContainer: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#1a1a1a]">
+    <div className="flex flex-col min-h-screen bg-[#1a1a1a] pt-12">
       <div ref={containerRef} className="flex-1 overflow-y-auto scrollbar-hide pb-6">
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center px-4 text-center py-[120px]">
@@ -85,7 +85,7 @@ const Index: React.FC = () => {
     <ChatProvider>
       <div className="bg-[#1a1a1a] min-h-screen">
         <Header />
-        <main>
+        <main className="pt-12">
           <ChatContainer />
         </main>
       </div>
