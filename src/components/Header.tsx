@@ -1,19 +1,17 @@
-
 import React, { useState } from 'react';
 import { Settings, X, Check } from 'lucide-react';
 import { useChat } from '@/context/ChatContext';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-
 const Header: React.FC = () => {
-  const { clearChat } = useChat();
+  const {
+    clearChat
+  } = useChat();
   const [open, setOpen] = useState(false);
-
-  return (
-    <header className="sticky top-0 z-10 backdrop-blur-md bg-background/80 border-b border-border">
+  return <header className="sticky top-0 z-10 backdrop-blur-md bg-background/80 border-b border-border">
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-lg bg-gradient-subtle animate-pulse-subtle flex items-center justify-center shadow-sm">
+          <div className="h-8 w-8 rounded-lg bg-gradient-subtle animate-pulse-subtle flex items-center justify-center shadow-sm bg-zinc-950">
             <span className="text-white font-semibold text-xs">AI</span>
           </div>
           <h1 className="text-xl font-medium">HUSSLE AI</h1>
@@ -33,9 +31,9 @@ const Header: React.FC = () => {
               <div className="space-y-6 py-4">
                 <div className="space-y-2">
                   <Button variant="destructive" onClick={() => {
-                    clearChat();
-                    setOpen(false);
-                  }}>
+                  clearChat();
+                  setOpen(false);
+                }}>
                     Effacer l'historique de conversation
                   </Button>
                 </div>
@@ -44,8 +42,6 @@ const Header: React.FC = () => {
           </Dialog>
         </div>
       </div>
-    </header>
-  );
+    </header>;
 };
-
 export default Header;
