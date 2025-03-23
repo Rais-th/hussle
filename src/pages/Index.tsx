@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { ChatProvider, useChat } from '@/context/ChatContext';
 import { useLanguage } from '@/context/LanguageContext';
@@ -17,11 +16,11 @@ const ChatContainer: React.FC = () => {
       <div ref={containerRef} className="flex-1 overflow-y-auto scrollbar-hide pb-6">
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center px-4 text-center py-[120px]">
-            <h2 className="text-2xl font-normal mb-10 text-white">
+            <h2 className="text-2xl font-normal mb-5 text-white">
               {t('welcome')}
             </h2>
-            <div className="flex items-center text-white/70 mb-6">
-              <Languages className="h-5 w-5 mr-2" />
+            <div className="flex items-center text-white/70 mb-3">
+              <Languages className="h-4 w-4 mr-2" />
               <p>{t('select.language')}</p>
             </div>
             <h3 className="text-xl font-normal text-white/70">

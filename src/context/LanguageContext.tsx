@@ -16,7 +16,7 @@ const translations = {
     'ai.thinking': 'L\'IA réfléchit...',
     'enter.to.send': 'Appuyez sur Entrée pour envoyer, Maj+Entrée pour un saut de ligne',
     'type.message': 'Tapez votre message ici...',
-    'select.language': 'Sélectionnez votre langue préférée en haut à droite',
+    'select.language': 'Choisissez votre langue',
     'what.help': 'Comment puis-je vous aider aujourd\'hui?',
   },
   en: {
@@ -25,7 +25,7 @@ const translations = {
     'ai.thinking': 'AI is thinking...',
     'enter.to.send': 'Press Enter to send, Shift+Enter for a new line',
     'type.message': 'Type your message here...',
-    'select.language': 'Select your preferred language in the top right',
+    'select.language': 'Choose your language',
     'what.help': 'What can I help you with today?',
   }
 };
