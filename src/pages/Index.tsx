@@ -1,12 +1,13 @@
-
 import React, { useEffect, useRef } from 'react';
 import { ChatProvider, useChat } from '@/context/ChatContext';
 import Header from '@/components/Header';
 import ChatMessage from '@/components/ChatMessage';
 import ChatInput from '@/components/ChatInput';
-
 const ChatContainer: React.FC = () => {
-  const { messages, isLoading } = useChat();
+  const {
+    messages,
+    isLoading
+  } = useChat();
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Initial welcome message
@@ -15,32 +16,16 @@ const ChatContainer: React.FC = () => {
       // No need to add a welcome message here, as it will be empty until the user sends something
     }
   }, [messages.length]);
-
-  return (
-    <div className="flex flex-col min-h-[calc(100vh-4rem)]">
-      <div 
-        ref={containerRef} 
-        className="flex-1 overflow-y-auto scrollbar-hide pb-6"
-      >
-        {messages.length === 0 ? (
-          <div className="h-full flex flex-col items-center justify-center px-4 text-center">
+  return <div className="flex flex-col min-h-[calc(100vh-4rem)]">
+      <div ref={containerRef} className="flex-1 overflow-y-auto scrollbar-hide pb-6">
+        {messages.length === 0 ? <div className="h-full flex flex-col items-center justify-center px-4 text-center py-[120px]">
             <h2 className="text-2xl font-medium mb-3">Bienvenue sur HUSSLE AI</h2>
             <p className="text-muted-foreground max-w-md">
               Commencez une conversation en tapant un message ci-dessous. Votre historique de conversation apparaîtra ici.
             </p>
-          </div>
-        ) : (
-          messages.map((message, index) => (
-            <ChatMessage 
-              key={message.id} 
-              message={message} 
-              isLatest={index === messages.length - 1}
-            />
-          ))
-        )}
+          </div> : messages.map((message, index) => <ChatMessage key={message.id} message={message} isLatest={index === messages.length - 1} />)}
         
-        {isLoading && messages.length > 0 && (
-          <div className="flex w-full max-w-4xl mx-auto px-4 py-6 animate-fade-in">
+        {isLoading && messages.length > 0 && <div className="flex w-full max-w-4xl mx-auto px-4 py-6 animate-fade-in">
             <div className="flex items-start gap-3">
               <div className="flex-shrink-0 rounded-full w-8 h-8 flex items-center justify-center bg-neutral-100 dark:bg-neutral-800 animate-pulse-subtle">
                 <span className="text-neutral-600 dark:text-neutral-400 text-xs">AI</span>
@@ -49,28 +34,22 @@ const ChatContainer: React.FC = () => {
                 <span className="text-sm sm:text-base">Réflexion en cours<span className="typing-indicator"></span></span>
               </div>
             </div>
-          </div>
-        )}
+          </div>}
       </div>
       
       <div className="sticky bottom-0 bg-gradient-to-t from-background to-transparent py-6">
         <ChatInput />
       </div>
-    </div>
-  );
+    </div>;
 };
-
 const Index: React.FC = () => {
-  return (
-    <ChatProvider>
+  return <ChatProvider>
       <div className="bg-gradient-radial from-background to-background/90 min-h-screen">
         <Header />
         <main className="container mx-auto">
           <ChatContainer />
         </main>
       </div>
-    </ChatProvider>
-  );
+    </ChatProvider>;
 };
-
 export default Index;
