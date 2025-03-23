@@ -24,9 +24,6 @@ const ChatContainer: React.FC = () => {
       >
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center px-4 text-center">
-            <div className="w-20 h-20 rounded-full bg-gradient-subtle animate-pulse-subtle mb-6 flex items-center justify-center">
-              <span className="text-white font-semibold text-2xl">AI</span>
-            </div>
             <h2 className="text-2xl font-medium mb-3">Bienvenue sur HUSSLE AI</h2>
             <p className="text-muted-foreground max-w-md">
               Commencez une conversation en tapant un message ci-dessous. Votre historique de conversation apparaîtra ici.
