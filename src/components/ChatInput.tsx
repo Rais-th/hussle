@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 
 const ChatInput: React.FC = () => {
   const { sendMessage, isLoading } = useChat();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [input, setInput] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -86,17 +86,19 @@ const ChatInput: React.FC = () => {
         </div>
       </form>
       
-      {/* Community Join Button */}
-      <div className="flex justify-center mb-4">
-        <Button 
-          onClick={() => window.open('https://skool.com/educs-ai-9369', '_blank')}
-          className="bg-black hover:bg-gray-800 text-white border border-white/20 transition-all duration-200 text-xs px-3 py-1 h-8 rounded-md max-w-[200px]"
-          size="sm"
-        >
-          <Users className="mr-1" size={14} />
-          Join the Free AI Community
-        </Button>
-      </div>
+      {/* Community Join Button - Only visible for French language */}
+      {language === 'fr' && (
+        <div className="flex justify-center mb-4">
+          <Button 
+            onClick={() => window.open('https://skool.com/educs-ai-9369', '_blank')}
+            className="bg-black hover:bg-gray-800 text-white border border-white/20 transition-all duration-200 text-xs px-3 py-1 h-8 rounded-md max-w-[200px]"
+            size="sm"
+          >
+            <Users className="mr-1" size={14} />
+            Join the Free AI Community
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
