@@ -46,7 +46,8 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
     
-    --chat-user: 249 84% 98%;
+    /* Changing from pink to more ChatGPT-like colors */
+    --chat-user: 220 70% 97%;
     --chat-assistant: 255 255 255;
     --chat-user-text: 30 30 30;
     --chat-assistant-text: 30 30 30;
@@ -93,7 +94,8 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
     
-    --chat-user: 60 60 90;
+    /* Changing from pink to ChatGPT-like colors for dark mode */
+    --chat-user: 215 30% 40%;
     --chat-assistant: 40 40 50;
     --chat-user-text: 240 240 255;
     --chat-assistant-text: 240 240 255;
