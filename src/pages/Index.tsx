@@ -25,9 +25,9 @@ const ChatContainer: React.FC = () => {
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center px-4 text-center">
             <div className="w-20 h-20 rounded-full bg-gradient-subtle animate-pulse-subtle mb-6 flex items-center justify-center">
-              <span className="text-white font-semibold text-2xl">H</span>
+              <span className="text-white font-semibold text-2xl">AI</span>
             </div>
-            <h2 className="text-2xl font-medium mb-3">Welcome to HUSSLE AI</h2>
+            <h2 className="text-2xl font-medium mb-3">Welcome to AI Assistant</h2>
             <p className="text-muted-foreground max-w-md">
               Start a conversation by typing a message below. Your chat history will appear here.
             </p>
@@ -46,7 +46,7 @@ const ChatContainer: React.FC = () => {
           <div className="flex w-full max-w-4xl mx-auto px-4 py-6 animate-fade-in">
             <div className="flex items-start gap-3">
               <div className="flex-shrink-0 rounded-full w-8 h-8 flex items-center justify-center bg-neutral-100 dark:bg-neutral-800 animate-pulse-subtle">
-                <span className="text-neutral-600 dark:text-neutral-400 text-xs">H</span>
+                <span className="text-neutral-600 dark:text-neutral-400 text-xs">AI</span>
               </div>
               <div className="glass-panel rounded-2xl rounded-tl-none px-4 py-3 animate-pulse-subtle">
                 <span className="text-sm sm:text-base">Thinking<span className="typing-indicator"></span></span>

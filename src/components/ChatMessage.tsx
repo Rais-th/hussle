@@ -43,7 +43,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, isLatest }) => {
           {isUser ? (
             <UserIcon className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           ) : (
-            <span className="text-xs font-medium">H</span>
+            <Bot className="w-4 h-4 text-neutral-600 dark:text-neutral-400" />
           )}
         </div>
         
