@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { toast } from '@/components/ui/use-toast';
 import { getChatCompletion, getAssistantResponse } from '@/utils/apiService';
+import { useLanguage } from './LanguageContext';
 
 export type Message = {
   id: string;
@@ -27,6 +28,7 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [isLoading, setIsLoading] = useState(false);
   const [apiKey] = useState<string>(DEFAULT_API_KEY);
   const [threadId, setThreadId] = useState<string | undefined>(undefined);
+  const { language } = useLanguage();
 
   // Load thread ID from localStorage on initial render
   useEffect(() => {
@@ -61,10 +63,13 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       console.log('Using API key:', `${apiKey.substring(0, 10)}...${apiKey.substring(apiKey.length - 5)}`); // Log masked key for debugging
       
+      // Add language instruction to the message
+      const contentWithLanguage = `[Respond in ${language === 'fr' ? 'French' : 'English'}] ${content}`;
+      
       // Get assistant response instead of chat completion
       const { content: assistantContent, threadId: newThreadId } = await getAssistantResponse(
         apiKey, 
-        content,
+        contentWithLanguage,
         threadId
       );
       
