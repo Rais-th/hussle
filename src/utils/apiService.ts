@@ -1,4 +1,3 @@
-
 interface Message {
   role: 'system' | 'user' | 'assistant';
   content: string;
@@ -9,6 +8,8 @@ export async function getChatCompletion(apiKey: string, messages: Message[]): Pr
   const trimmedApiKey = apiKey.trim();
   
   try {
+    console.log('Making API request with key:', `${trimmedApiKey.substring(0, 10)}...${trimmedApiKey.substring(trimmedApiKey.length - 5)}`);
+    
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -41,8 +42,11 @@ export async function getAssistantResponse(apiKey: string, message: string, thre
   const trimmedApiKey = apiKey.trim();
   
   try {
+    console.log('Using Assistant API with key:', `${trimmedApiKey.substring(0, 10)}...${trimmedApiKey.substring(trimmedApiKey.length - 5)}`);
+    
     let currentThreadId = threadId;
     if (!currentThreadId) {
+      console.log('Creating new thread');
       const threadResponse = await fetch('https://api.openai.com/v1/threads', {
         method: 'POST',
         headers: {
@@ -55,11 +59,13 @@ export async function getAssistantResponse(apiKey: string, message: string, thre
       
       if (!threadResponse.ok) {
         const errorData = await threadResponse.json();
+        console.error('Thread creation error response:', errorData);
         throw new Error(errorData.error?.message || `Thread creation error: ${threadResponse.status}`);
       }
       
       const threadData = await threadResponse.json();
       currentThreadId = threadData.id;
+      console.log('Thread created with ID:', currentThreadId);
     }
     
     await fetch(`https://api.openai.com/v1/threads/${currentThreadId}/messages`, {
