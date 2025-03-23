@@ -5,6 +5,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import Header from '@/components/Header';
 import ChatMessage from '@/components/ChatMessage';
 import ChatInput from '@/components/ChatInput';
+import { Languages } from 'lucide-react';
 
 const ChatContainer: React.FC = () => {
   const { messages, isLoading } = useChat();
@@ -17,8 +18,15 @@ const ChatContainer: React.FC = () => {
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center px-4 text-center py-[120px]">
             <h2 className="text-2xl font-normal mb-10 text-white">
-              What can I help with?
+              {t('welcome')}
             </h2>
+            <div className="flex items-center text-white/70 mb-6">
+              <Languages className="h-5 w-5 mr-2" />
+              <p>{t('select.language')}</p>
+            </div>
+            <h3 className="text-xl font-normal text-white/70">
+              {t('what.help')}
+            </h3>
           </div>
         ) : (
           messages.map((message, index) => (
