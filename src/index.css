@@ -134,13 +134,15 @@
   
   .typing-indicator::after {
     content: '';
+    display: inline-block;
+    width: auto;
     animation: dot-pulse 1.5s infinite;
   }
   
   @keyframes dot-pulse {
-    0%, 100% { content: '.'; }
-    33% { content: '..'; }
-    66% { content: '...'; }
+    0%, 100% { content: ' .'; }
+    33% { content: ' ..'; }
+    66% { content: ' ...'; }
   }
   
   .scrollbar-hide::-webkit-scrollbar {

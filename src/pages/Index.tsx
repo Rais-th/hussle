@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import { ChatProvider, useChat } from '@/context/ChatContext';
 import { useLanguage } from '@/context/LanguageContext';
@@ -77,7 +78,7 @@ const ChatContainer: React.FC = () => {
             <div className="bg-neutral-800 rounded-2xl px-3 sm:px-4 py-2 sm:py-3 animate-pulse-subtle">
               <span className="text-xs sm:text-sm text-white/70">
                 {t('ai.thinking').split('.')[0]}
-                <span className="typing-indicator"></span>
+                <span className="typing-indicator">&nbsp;</span>
               </span>
             </div>
           </div>
