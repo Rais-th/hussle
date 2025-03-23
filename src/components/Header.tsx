@@ -9,7 +9,7 @@ const Header: React.FC = () => {
     <header className="border-b border-white/10">
       <div className="container mx-auto flex h-12 items-center justify-between">
         <div className="font-normal text-sm text-white/70">
-          Chat Pro
+          HUSSLE AI
         </div>
         <div className="flex items-center space-x-2">
           <LanguageSelector />
