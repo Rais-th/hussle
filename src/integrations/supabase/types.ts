@@ -352,6 +352,33 @@ export type Database = {
         }
         Relationships: []
       }
+      user_interactions: {
+        Row: {
+          id: string
+          interaction_type: string
+          message_id: string | null
+          metadata: Json | null
+          timestamp: string
+          user_id: string | null
+        }
+        Insert: {
+          id?: string
+          interaction_type: string
+          message_id?: string | null
+          metadata?: Json | null
+          timestamp?: string
+          user_id?: string | null
+        }
+        Update: {
+          id?: string
+          interaction_type?: string
+          message_id?: string | null
+          metadata?: Json | null
+          timestamp?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       VerificationToken: {
         Row: {
           expires: string

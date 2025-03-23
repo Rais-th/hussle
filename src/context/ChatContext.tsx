@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { toast } from '@/components/ui/use-toast';
 import { getChatCompletion, getAssistantResponse } from '@/utils/apiService';
 import { useLanguage } from './LanguageContext';
+import { trackInteraction } from '@/utils/interactionTracker';
 
 export type Message = {
   id: string;
@@ -37,7 +38,13 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     if (savedThreadId) {
       setThreadId(savedThreadId);
     }
-  }, []);
+    
+    // Track that the chat was started/loaded
+    trackInteraction({ 
+      interactionType: 'chat_started',
+      metadata: { language }
+    });
+  }, [language]);
 
   // Save thread ID to localStorage whenever it changes
   useEffect(() => {
@@ -59,6 +66,13 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
+
+    // Track the user message
+    trackInteraction({ 
+      interactionType: 'message_sent',
+      messageId: userMessage.id,
+      metadata: { content_length: content.length, language }
+    });
 
     try {
       console.log('Using API key:', `${apiKey.substring(0, 10)}...${apiKey.substring(apiKey.length - 5)}`); // Log masked key for debugging
@@ -87,6 +101,17 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
+
+      // Track the assistant response
+      trackInteraction({ 
+        interactionType: 'message_received',
+        messageId: assistantMessage.id,
+        metadata: { 
+          content_length: assistantContent.length,
+          language,
+          threadId: newThreadId
+        }
+      });
     } catch (error) {
       console.error('Error getting assistant response:', error);
       

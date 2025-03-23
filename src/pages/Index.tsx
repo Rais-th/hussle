@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/select";
 import { useIsMobile } from '@/hooks/use-mobile';
 import AnimatedWelcome from '@/components/AnimatedWelcome';
+import { trackInteraction } from '@/utils/interactionTracker';
 
 const ChatContainer: React.FC = () => {
   const { messages, isLoading } = useChat();
@@ -30,6 +31,22 @@ const ChatContainer: React.FC = () => {
     }
   }, [messages]);
 
+  // Track language changes
+  const handleLanguageChange = (value: string) => {
+    const newLanguage = value as 'en' | 'fr';
+    
+    // Track the language change
+    trackInteraction({
+      interactionType: 'language_changed',
+      metadata: { 
+        previous: language, 
+        new: newLanguage
+      }
+    });
+    
+    setLanguage(newLanguage);
+  };
+
   return (
     <div className="flex flex-col min-h-[calc(100vh-48px)] bg-[#1a1a1a] pt-6 sm:pt-12">
       <div 
@@ -43,7 +60,7 @@ const ChatContainer: React.FC = () => {
             <div className="mb-2">
               <Select
                 value={language}
-                onValueChange={(value) => setLanguage(value as 'en' | 'fr')}
+                onValueChange={handleLanguageChange}
               >
                 <SelectTrigger className="w-[140px] bg-neutral-800 border-neutral-700 text-white">
                   <Languages className="h-4 w-4 mr-2" />
