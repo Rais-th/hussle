@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { Message } from '@/context/ChatContext';
-import { UserIcon, Bot } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ChatMessageProps {
   message: Message;
@@ -48,6 +48,7 @@ const formatTextWithLinks = (text: string) => {
 const ChatMessage: React.FC<ChatMessageProps> = ({ message, isLatest }) => {
   const messageRef = useRef<HTMLDivElement>(null);
   const isUser = message.role === 'user';
+  const isMobile = useIsMobile();
   
   // Scroll to this message if it's the latest
   useEffect(() => {
@@ -60,20 +61,20 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, isLatest }) => {
     <div
       ref={messageRef}
       className={cn(
-        "flex w-full max-w-2xl mx-auto px-4 py-6 animate-slide-up",
+        "flex w-full max-w-2xl mx-auto px-3 sm:px-4 py-3 sm:py-6 animate-slide-up",
         isUser ? "justify-end" : "justify-start"
       )}
     >
       <div
         className={cn(
-          "flex max-w-[85%]",
+          "flex max-w-[90%] sm:max-w-[85%]",
           isUser ? "bg-neutral-800 text-white" : "bg-neutral-800 text-white",
-          "rounded-2xl px-4 py-3"
+          "rounded-2xl px-3 sm:px-4 py-2 sm:py-3"
         )}
       >
-        <div className="prose prose-invert pointer-events-auto relative z-10">
+        <div className="prose prose-invert prose-sm sm:prose-base pointer-events-auto relative z-10">
           {message.content.split('\n').map((paragraph, index) => (
-            <p key={index} className="mb-2 last:mb-0 text-sm">
+            <p key={index} className="mb-1.5 sm:mb-2 last:mb-0 text-xs sm:text-sm">
               {formatTextWithLinks(paragraph)}
             </p>
           ))}

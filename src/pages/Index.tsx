@@ -14,18 +14,31 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const ChatContainer: React.FC = () => {
   const { messages, isLoading } = useChat();
   const { t, language, setLanguage } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
+
+  // Ensure messages are scrolled into view when new ones are added
+  useEffect(() => {
+    if (containerRef.current && messages.length > 0) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#1a1a1a] pt-12">
-      <div ref={containerRef} className="flex-1 overflow-y-auto scrollbar-hide pb-6">
+    <div className="flex flex-col min-h-[calc(100vh-48px)] bg-[#1a1a1a] pt-6 sm:pt-12">
+      <div 
+        ref={containerRef} 
+        className="flex-1 overflow-y-auto scrollbar-hide pb-4 sm:pb-6"
+        style={{ maxHeight: 'calc(100vh - 140px)' }}
+      >
         {messages.length === 0 ? (
-          <div className="h-full flex flex-col items-center justify-center px-4 text-center py-[120px]">
-            <h2 className="text-2xl font-normal mb-3 text-white">
+          <div className="h-full flex flex-col items-center justify-center px-4 text-center py-[80px] sm:py-[120px]">
+            <h2 className="text-xl sm:text-2xl font-normal mb-3 text-white">
               {t('welcome')}
             </h2>
             <div className="mb-2">
@@ -47,7 +60,7 @@ const ChatContainer: React.FC = () => {
                 </SelectContent>
               </Select>
             </div>
-            <h3 className="text-xl font-normal text-white/70">
+            <h3 className="text-base sm:text-xl font-normal text-white/70">
               {t('what.help')}
             </h3>
           </div>
@@ -62,9 +75,9 @@ const ChatContainer: React.FC = () => {
         )}
         
         {isLoading && messages.length > 0 && (
-          <div className="flex w-full max-w-2xl mx-auto px-4 py-6 animate-fade-in">
-            <div className="bg-neutral-800 rounded-2xl px-4 py-3 animate-pulse-subtle">
-              <span className="text-sm text-white/70">
+          <div className="flex w-full max-w-2xl mx-auto px-3 sm:px-4 py-3 sm:py-6 animate-fade-in">
+            <div className="bg-neutral-800 rounded-2xl px-3 sm:px-4 py-2 sm:py-3 animate-pulse-subtle">
+              <span className="text-xs sm:text-sm text-white/70">
                 {t('ai.thinking').split('.')[0]}
                 <span className="typing-indicator"></span>
               </span>
@@ -73,7 +86,7 @@ const ChatContainer: React.FC = () => {
         )}
       </div>
       
-      <div className="sticky bottom-0 py-4">
+      <div className="sticky bottom-0 py-2 sm:py-4 bg-[#1a1a1a]">
         <ChatInput />
       </div>
     </div>
