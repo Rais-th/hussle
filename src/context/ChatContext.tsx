@@ -1,9 +1,8 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { toast } from '@/components/ui/use-toast';
 import { getChatCompletion, getAssistantResponse } from '@/utils/apiService';
 import { useLanguage } from './LanguageContext';
-import { trackInteraction } from '@/utils/interactionTracker';
+import { trackInteraction, getRecentInteractions } from '@/utils/interactionTracker';
 
 export type Message = {
   id: string;
@@ -31,6 +30,21 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [threadId, setThreadId] = useState<string | undefined>(undefined);
   const { language } = useLanguage();
 
+  // Debug function to check interactions
+  useEffect(() => {
+    const debugInteractions = async () => {
+      try {
+        const recentInteractions = await getRecentInteractions(5);
+        console.log('Recent interactions:', recentInteractions);
+      } catch (error) {
+        console.error('Error checking interactions:', error);
+      }
+    };
+    
+    // Run the debug function once on mount
+    debugInteractions();
+  }, []);
+
   // Load thread ID from localStorage on initial render
   useEffect(() => {
     // Load thread ID from localStorage if exists
@@ -42,7 +56,11 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     // Track that the chat was started/loaded
     trackInteraction({ 
       interactionType: 'chat_started',
-      metadata: { language }
+      metadata: { 
+        language,
+        threadId: savedThreadId || 'new_session',
+        timestamp: new Date().toISOString()
+      }
     });
   }, [language]);
 
@@ -67,11 +85,16 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
 
-    // Track the user message
+    // Track the user message with more content details
     trackInteraction({ 
       interactionType: 'message_sent',
       messageId: userMessage.id,
-      metadata: { content_length: content.length, language }
+      metadata: { 
+        content_length: content.length, 
+        content_preview: content.substring(0, 50) + (content.length > 50 ? '...' : ''),
+        language,
+        timestamp: new Date().toISOString()
+      }
     });
 
     try {
@@ -102,14 +125,16 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
       setMessages((prev) => [...prev, assistantMessage]);
 
-      // Track the assistant response
+      // Track the assistant response with more details
       trackInteraction({ 
         interactionType: 'message_received',
         messageId: assistantMessage.id,
         metadata: { 
           content_length: assistantContent.length,
+          content_preview: assistantContent.substring(0, 50) + (assistantContent.length > 50 ? '...' : ''),
           language,
-          threadId: newThreadId
+          threadId: newThreadId,
+          response_time_ms: Date.now() - userMessage.timestamp.getTime()
         }
       });
     } catch (error) {
