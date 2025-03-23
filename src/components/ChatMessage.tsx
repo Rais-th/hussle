@@ -31,7 +31,11 @@ const formatTextWithLinks = (text: string) => {
           href={urls[i]} 
           target="_blank" 
           rel="noopener noreferrer"
-          className="text-blue-400 hover:text-blue-300 underline font-medium hover:brightness-125 transition-all"
+          className="text-blue-400 hover:text-blue-300 underline font-medium hover:brightness-125 transition-all cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation();
+            window.open(urls[i], '_blank', 'noopener,noreferrer');
+          }}
         >
           {urls[i]}
         </a>
@@ -67,7 +71,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, isLatest }) => {
           "rounded-2xl px-4 py-3"
         )}
       >
-        <div className="prose prose-invert">
+        <div className="prose prose-invert pointer-events-auto">
           {message.content.split('\n').map((paragraph, index) => (
             <p key={index} className="mb-2 last:mb-0 text-sm">
               {formatTextWithLinks(paragraph)}
