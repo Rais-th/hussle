@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Settings, X, Check } from 'lucide-react';
+import { Settings, X, Check, Bot } from 'lucide-react';
 import { useChat } from '@/context/ChatContext';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -13,8 +13,8 @@ const Header: React.FC = () => {
     <header className="sticky top-0 z-10 backdrop-blur-md bg-background/80 border-b border-border">
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-lg bg-gradient-subtle animate-pulse-subtle flex items-center justify-center shadow-sm">
-            <span className="text-white font-semibold text-xs">AI</span>
+          <div className="h-8 w-8 rounded-lg bg-green-600 flex items-center justify-center shadow-sm">
+            <Bot className="h-5 w-5 text-white" />
           </div>
           <h1 className="text-xl font-medium">HUSSLE AI</h1>
         </div>
