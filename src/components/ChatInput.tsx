@@ -92,7 +92,7 @@ const ChatInput: React.FC = () => {
       {language === 'fr' && (
         <div className="flex justify-center mb-4">
           <Button 
-            onClick={() => window.open('https://skool.com/educs-ai-9369', '_blank')}
+            onClick={() => window.open('https://www.skool.com/educs-ai-9369/about?ref=9e56bf5b784046a39fc852300408a083', '_blank')}
             className="bg-black hover:bg-gray-800 text-white border border-white/20 transition-all duration-200 text-xs px-4 py-1 h-8 rounded-md w-auto min-w-[250px] max-w-[280px]"
             size="sm"
           >
