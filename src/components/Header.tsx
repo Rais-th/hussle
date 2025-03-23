@@ -1,7 +1,5 @@
 
 import React from 'react';
-import { ThemeProvider } from '@/components/ThemeProvider';
-import { ModeToggle } from '@/components/ModeToggle';
 import LanguageSelector from './LanguageSelector';
 
 const Header: React.FC = () => {
@@ -13,14 +11,6 @@ const Header: React.FC = () => {
         </div>
         <div className="flex items-center space-x-2">
           <LanguageSelector />
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <ModeToggle />
-          </ThemeProvider>
         </div>
       </div>
     </header>
