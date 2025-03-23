@@ -6,13 +6,14 @@ interface Message {
 
 export async function getChatCompletion(apiKey: string, messages: Message[]): Promise<string> {
   const url = 'https://api.openai.com/v1/chat/completions';
+  const trimmedApiKey = apiKey.trim();
   
   try {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
+        'Authorization': `Bearer ${trimmedApiKey}`,
       },
       body: JSON.stringify({
         model: 'gpt-4o-mini',
@@ -37,6 +38,7 @@ export async function getChatCompletion(apiKey: string, messages: Message[]): Pr
 
 export async function getAssistantResponse(apiKey: string, message: string, threadId?: string): Promise<{ content: string, threadId: string }> {
   const assistantId = 'asst_Iq5zWNuMFFeBH5S6kWEHrdOQ';
+  const trimmedApiKey = apiKey.trim();
   
   try {
     let currentThreadId = threadId;
@@ -45,7 +47,7 @@ export async function getAssistantResponse(apiKey: string, message: string, thre
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
+          'Authorization': `Bearer ${trimmedApiKey}`,
           'OpenAI-Beta': 'assistants=v2'
         },
         body: JSON.stringify({})
@@ -64,7 +66,7 @@ export async function getAssistantResponse(apiKey: string, message: string, thre
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
+        'Authorization': `Bearer ${trimmedApiKey}`,
         'OpenAI-Beta': 'assistants=v2'
       },
       body: JSON.stringify({
@@ -77,7 +79,7 @@ export async function getAssistantResponse(apiKey: string, message: string, thre
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
+        'Authorization': `Bearer ${trimmedApiKey}`,
         'OpenAI-Beta': 'assistants=v2'
       },
       body: JSON.stringify({
@@ -100,7 +102,7 @@ export async function getAssistantResponse(apiKey: string, message: string, thre
       const statusResponse = await fetch(`https://api.openai.com/v1/threads/${currentThreadId}/runs/${runId}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${apiKey}`,
+          'Authorization': `Bearer ${trimmedApiKey}`,
           'OpenAI-Beta': 'assistants=v2'
         }
       });
@@ -121,7 +123,7 @@ export async function getAssistantResponse(apiKey: string, message: string, thre
     const messagesResponse = await fetch(`https://api.openai.com/v1/threads/${currentThreadId}/messages`, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        'Authorization': `Bearer ${trimmedApiKey}`,
         'OpenAI-Beta': 'assistants=v2'
       }
     });
