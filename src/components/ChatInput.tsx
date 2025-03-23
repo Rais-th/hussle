@@ -53,37 +53,37 @@ const ChatInput: React.FC = () => {
             onKeyDown={handleKeyDown}
             placeholder={t('type.message')}
             rows={1}
-            className="w-full resize-none bg-transparent p-2 sm:p-3 pr-12 focus:outline-none text-sm sm:text-base text-white/90 placeholder:text-white/40"
+            className="w-full resize-none bg-transparent p-2 sm:p-3 pr-10 focus:outline-none text-sm sm:text-base text-white/90 placeholder:text-white/40"
             disabled={isLoading}
           />
-          <div className="absolute right-2 bottom-2 flex space-x-1">
+          <div className="absolute right-1.5 bottom-1.5 flex space-x-1">
             <button
               type="submit"
               disabled={!input.trim() || isLoading}
               className={cn(
-                "p-1.5 rounded-full transition-all flex justify-center items-center",
+                "p-1 rounded-full transition-all flex justify-center items-center",
                 input.trim() && !isLoading
                   ? "bg-white text-black"
                   : "bg-white/10 text-white/40 cursor-not-allowed"
               )}
             >
-              <ArrowUp size={isMobile ? 16 : 18} strokeWidth={2.5} className={cn(isLoading && "opacity-50")} />
+              <ArrowUp size={16} strokeWidth={2.5} className={cn(isLoading && "opacity-50")} />
             </button>
           </div>
         </div>
         
-        <div className="p-1.5 sm:p-2 border-t border-white/5 flex items-center justify-between">
-          <div className="flex space-x-1">
-            <button type="button" className="p-1 sm:p-1.5 rounded-full text-white/50 hover:bg-white/10">
-              <Plus size={isMobile ? 16 : 18} />
+        <div className="p-1.5 border-t border-white/5 flex items-center justify-between">
+          <div className="flex space-x-0.5">
+            <button type="button" className="p-1 rounded-full text-white/50 hover:bg-white/10">
+              <Plus size={16} />
             </button>
-            <button type="button" className="p-1 sm:p-1.5 rounded-full text-white/50 hover:bg-white/10">
-              <Globe size={isMobile ? 16 : 18} />
+            <button type="button" className="p-1 rounded-full text-white/50 hover:bg-white/10">
+              <Globe size={16} />
             </button>
           </div>
           
-          <button type="button" className="p-1 sm:p-1.5 rounded-full text-white/50 hover:bg-white/10">
-            <MoreHorizontal size={isMobile ? 16 : 18} />
+          <button type="button" className="p-1 rounded-full text-white/50 hover:bg-white/10">
+            <MoreHorizontal size={16} />
           </button>
         </div>
       </form>
