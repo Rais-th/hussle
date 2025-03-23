@@ -3,9 +3,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useChat } from '@/context/ChatContext';
 import { ArrowUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useLanguage } from '@/context/LanguageContext';
 
 const ChatInput: React.FC = () => {
   const { sendMessage, isLoading } = useChat();
+  const { t } = useLanguage();
   const [input, setInput] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -46,7 +48,7 @@ const ChatInput: React.FC = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Tapez votre message ici..."
+            placeholder={t('type.message')}
             rows={1}
             className="w-full resize-none bg-transparent p-4 pr-12 focus:outline-none text-sm sm:text-base"
             disabled={isLoading}
@@ -69,10 +71,10 @@ const ChatInput: React.FC = () => {
           <div className="flex-1">
             {isLoading ? (
               <span className="text-blue-500 dark:text-blue-400 animate-pulse">
-                L'IA réfléchit...
+                {t('ai.thinking')}
               </span>
             ) : (
-              <span>Appuyez sur Entrée pour envoyer, Maj+Entrée pour un saut de ligne</span>
+              <span>{t('enter.to.send')}</span>
             )}
           </div>
         </div>

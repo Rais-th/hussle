@@ -1,44 +1,26 @@
 
-import React, { useState } from 'react';
-import { Settings, X, Check } from 'lucide-react';
-import { useChat } from '@/context/ChatContext';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import React from 'react';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import { ModeToggle } from '@/components/ModeToggle';
+import LanguageSelector from './LanguageSelector';
 
 const Header: React.FC = () => {
-  const { clearChat } = useChat();
-  const [open, setOpen] = useState(false);
-
   return (
-    <header className="sticky top-0 z-10 backdrop-blur-md bg-background/80 border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <h1 className="text-xl font-medium">HUSSLE AI</h1>
+    <header className="border-b border-border">
+      <div className="container mx-auto flex h-16 items-center justify-between">
+        <div className="font-semibold text-lg">
+          HUSSLE AI
         </div>
-        
-        <div className="flex items-center gap-2">
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-              <Button variant="outline" size="icon">
-                <Settings className="h-4 w-4" />
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
-              <DialogHeader>
-                <DialogTitle>Paramètres</DialogTitle>
-              </DialogHeader>
-              <div className="space-y-6 py-4">
-                <div className="space-y-2">
-                  <Button variant="destructive" onClick={() => {
-                    clearChat();
-                    setOpen(false);
-                  }}>
-                    Effacer l'historique de conversation
-                  </Button>
-                </div>
-              </div>
-            </DialogContent>
-          </Dialog>
+        <div className="flex items-center space-x-2">
+          <LanguageSelector />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ModeToggle />
+          </ThemeProvider>
         </div>
       </div>
     </header>
