@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 type Language = 'fr' | 'en';
@@ -18,6 +17,7 @@ const translations = {
     'type.message': 'Tapez votre message ici...',
     'select.language': 'Langue',
     'what.help': 'Comment puis-je vous aider?',
+    'join.community': 'Rejoindre la communauté AI gratuite',
   },
   en: {
     'welcome': 'Welcome to HUSSLE AI',
@@ -27,44 +27,39 @@ const translations = {
     'type.message': 'Type your message here...',
     'select.language': 'Language',
     'what.help': 'How can I help?',
+    'join.community': 'Join the Free AI Community',
   }
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Get initial language from localStorage or use browser language or fallback to French
   const getInitialLanguage = (): Language => {
     const savedLanguage = localStorage.getItem('language');
     if (savedLanguage && (savedLanguage === 'fr' || savedLanguage === 'en')) {
       return savedLanguage;
     }
     
-    // Check browser language
     const browserLanguage = navigator.language.split('-')[0];
     if (browserLanguage === 'en') {
       return 'en';
     }
     
-    // Default to French
     return 'fr';
   };
 
   const [language, setLanguageState] = useState<Language>(getInitialLanguage);
 
-  // Function to set language and save to localStorage
   const setLanguage = (newLanguage: Language) => {
     setLanguageState(newLanguage);
     localStorage.setItem('language', newLanguage);
   };
 
-  // Translation function
   const t = (key: string): string => {
     return translations[language][key as keyof typeof translations['fr']] || key;
   };
 
   useEffect(() => {
-    // Set HTML lang attribute
     document.documentElement.lang = language;
   }, [language]);
 

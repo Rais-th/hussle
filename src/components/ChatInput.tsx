@@ -97,7 +97,7 @@ const ChatInput: React.FC = () => {
             size="sm"
           >
             <Users className="mr-1" size={14} />
-            Join the Free AI Community
+            Rejoindre la communauté AI gratuite
           </Button>
         </div>
       )}
