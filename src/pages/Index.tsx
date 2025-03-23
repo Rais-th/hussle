@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { ChatProvider, useChat } from '@/context/ChatContext';
 import { useLanguage } from '@/context/LanguageContext';
@@ -15,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useIsMobile } from '@/hooks/use-mobile';
+import AnimatedWelcome from '@/components/AnimatedWelcome';
 
 const ChatContainer: React.FC = () => {
   const { messages, isLoading } = useChat();
@@ -38,9 +38,7 @@ const ChatContainer: React.FC = () => {
       >
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center px-4 text-center py-[80px] sm:py-[120px]">
-            <h2 className="text-xl sm:text-2xl font-normal mb-3 text-white">
-              {t('welcome')}
-            </h2>
+            <AnimatedWelcome />
             <div className="mb-2">
               <Select
                 value={language}
