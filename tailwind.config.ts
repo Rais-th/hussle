@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -104,14 +103,26 @@ export default {
 					'0%, 100%': { opacity: '1' },
 					'50%': { opacity: '0.8' }
 				},
-				typing: {
+				'typing': {
 					'0%': { width: '0%' },
 					'100%': { width: '100%' }
 				},
 				'bounce-subtle': {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-4px)' }
-				}
+				},
+				'thinking-dot-1': {
+					'0%, 100%': { opacity: '0.2', transform: 'scale(0.8)' },
+					'50%': { opacity: '0.8', transform: 'scale(1)' },
+				},
+				'thinking-dot-2': {
+					'0%, 100%': { opacity: '0.2', transform: 'scale(0.8)' },
+					'50%': { opacity: '0.8', transform: 'scale(1)' },
+				},
+				'thinking-dot-3': {
+					'0%, 100%': { opacity: '0.2', transform: 'scale(0.8)' },
+					'50%': { opacity: '0.8', transform: 'scale(1)' },
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -122,7 +133,10 @@ export default {
 				'slide-down': 'slide-down 0.3s ease-out',
 				'pulse-subtle': 'pulse-subtle 1.5s ease-in-out infinite',
 				'typing': 'typing 1.5s steps(20, end)',
-				'bounce-subtle': 'bounce-subtle 2s ease-in-out infinite'
+				'bounce-subtle': 'bounce-subtle 2s ease-in-out infinite',
+				'thinking-dot-1': 'thinking-dot-1 1.6s infinite ease-in-out',
+				'thinking-dot-2': 'thinking-dot-2 1.6s infinite ease-in-out 0.3s',
+				'thinking-dot-3': 'thinking-dot-3 1.6s infinite ease-in-out 0.6s',
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

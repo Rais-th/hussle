@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { toast } from '@/components/ui/use-toast';
 import { getChatCompletion, getAssistantResponse } from '@/utils/apiService';
@@ -12,14 +11,24 @@ export type Message = {
   timestamp: Date;
 };
 
-interface ChatContextProps {
+interface UserInfo {
+  nom: string;
+  postnom: string;
+  numero: string;
+}
+
+interface ChatContextType {
   messages: Message[];
   isLoading: boolean;
+  userInfo: UserInfo | null;
+  setUserInfo: (info: UserInfo) => void;
+  addMessage: (message: Message) => void;
+  setIsLoading: (loading: boolean) => void;
   sendMessage: (content: string) => Promise<void>;
   clearChat: () => void;
 }
 
-const ChatContext = createContext<ChatContextProps | undefined>(undefined);
+const ChatContext = createContext<ChatContextType | undefined>(undefined);
 
 // Store the default API key - ensure this is the exact, complete key
 const DEFAULT_API_KEY = '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';
@@ -30,6 +39,7 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [apiKey] = useState<string>(DEFAULT_API_KEY);
   const [threadId, setThreadId] = useState<string | undefined>(undefined);
   const { language } = useLanguage();
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
   // Load thread ID from localStorage on initial render
   useEffect(() => {
@@ -52,6 +62,10 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       localStorage.setItem('openai_thread_id', threadId);
     }
   }, [threadId]);
+
+  const addMessage = (message: Message) => {
+    setMessages((prev) => [...prev, message]);
+  };
 
   const sendMessage = async (content: string) => {
     if (!content.trim()) return;
@@ -133,15 +147,26 @@ export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   return (
-    <ChatContext.Provider value={{ messages, isLoading, sendMessage, clearChat }}>
+    <ChatContext.Provider
+      value={{
+        messages,
+        isLoading,
+        userInfo,
+        setUserInfo,
+        addMessage,
+        setIsLoading,
+        sendMessage,
+        clearChat,
+      }}
+    >
       {children}
     </ChatContext.Provider>
   );
 };
 
-export const useChat = (): ChatContextProps => {
+export const useChat = () => {
   const context = useContext(ChatContext);
-  if (!context) {
+  if (context === undefined) {
     throw new Error('useChat must be used within a ChatProvider');
   }
   return context;

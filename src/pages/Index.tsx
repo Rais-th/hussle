@@ -1,12 +1,13 @@
-
 import React, { useEffect, useRef } from 'react';
 import { ChatProvider, useChat } from '@/context/ChatContext';
 import { useLanguage } from '@/context/LanguageContext';
 import Header from '@/components/Header';
 import ChatMessage from '@/components/ChatMessage';
 import ChatInput from '@/components/ChatInput';
+import UserForm from '@/components/UserForm';
 import { Languages } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import ThinkingLoader from '@/components/ui/thinking-loader';
 import {
   Select,
   SelectContent,
@@ -19,7 +20,7 @@ import AnimatedWelcome from '@/components/AnimatedWelcome';
 import { trackInteraction } from '@/utils/interactionTracker';
 
 const ChatContainer: React.FC = () => {
-  const { messages, isLoading } = useChat();
+  const { messages, isLoading, userInfo } = useChat();
   const { t, language, setLanguage } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
@@ -46,6 +47,16 @@ const ChatContainer: React.FC = () => {
     
     setLanguage(newLanguage);
   };
+
+  if (!userInfo) {
+    return (
+      <div className="flex flex-col min-h-[calc(100vh-48px)] bg-[#1a1a1a] pt-6 sm:pt-12">
+        <div className="flex-1 flex items-center justify-center">
+          <UserForm />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-[calc(100vh-48px)] bg-[#1a1a1a] pt-6 sm:pt-12">
@@ -92,11 +103,8 @@ const ChatContainer: React.FC = () => {
         
         {isLoading && messages.length > 0 && (
           <div className="flex w-full max-w-2xl mx-auto px-3 sm:px-4 py-3 sm:py-6 animate-fade-in">
-            <div className="bg-neutral-800 rounded-2xl px-3 sm:px-4 py-2 sm:py-3 animate-pulse-subtle">
-              <span className="text-xs sm:text-sm text-white/70">
-                {t('ai.thinking').split('.')[0]}
-                <span className="typing-indicator">&nbsp;</span>
-              </span>
+            <div className="bg-neutral-800/50 backdrop-blur-sm rounded-2xl px-6 py-4">
+              <ThinkingLoader />
             </div>
           </div>
         )}
